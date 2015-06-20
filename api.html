@@ -1,0 +1,504 @@
+<HTML>
+
+  <HEAD>
+   <TITLE>DXR2 TEMPORARY IOCTL INTERFACE v0.1</TITLE>
+  </HEAD>
+
+  <BODY>
+    <H2>DXR2 TEMPORARY IOCTL INTERFACE v0.1</H2>
+
+<BR><BR>
+
+<B>DXR2_IOC_GET_REGION_CODE</B><BR>
+Get the region code for the card. Places it in supplied buffer<BR>
+<EM>Arguments:</EM> Instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg will be set to the region code
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_TV_OUTPUT_FORMAT</B><BR>
+Set the tv output TV format<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg should be one of DXR2_OUTPUTFORMAT_*
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_TV_INTERLACED_MODE</B><BR>
+Set the tv output interlaced mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg should be one of DXR2_INTERLACED_*
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_TV_BLACKWHITE_MODE</B><BR>
+Set the tv black/white mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg should be one of DXR2_BLACKWHITE_*
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_TV_PIXEL_MODE</B><BR>
+Set the tv output pixel mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg should be one of DXR2_PIXEL_*
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_TV_75IRE_MODE</B><BR>
+Set the tv output 7.5 IRE mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg should be one of DXR2_75IRE_*
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_SOURCE_VIDEO_FORMAT</B><BR>
+Set the source video format<BR>
+<EM>Arguments:</EM> instance of dxr2_threeArg_t. 
+<UL>
+<LI>arg1 should be one of DXR2_SRC_VIDEO_FREQ_30, DXR2_SRC_VIDEO_FREQ_25
+<LI>arg2 should be x resolution
+<LI>arg3 should be y resolution
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_GET_CAPABILITIES</B><BR>
+Get device capabilities. This doesn't actually do anything yet, since I'm not quite sure what sort of things should be returned.<BR>
+<EM>Arguments:</EM> buffer to put capabilities in.<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_CLEAR_VIDEO</B><BR>
+Clear ziva video screen<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_PAUSE</B><BR>
+Pause the current video stream if not already paused or stopped<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_AUDIO_VOLUME</B><BR>
+Set the audio volume<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg should be volume to set (0<=arg<=19, where 0 is min volume)
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OUTPUT_ASPECT_RATIO</B><BR>
+Set the output aspect ratio<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg is one of DXR2_ASPECTRATIO_4_3 or DXR2_ASPECTRATIO_16_9
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_ABORT</B><BR>
+Abort playback<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_STOP</B><BR>
+Stop playback<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_ENABLE_SUBPICTURE</B><BR>
+Enable subpicture<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg should be one of DXR2_SUBPICTURE_OFF or DXR2_SUBPICTURE_ON
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SLOW_FORWARDS</B><BR>
+Slow Forwards<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg is one of DXR2_PLAYRATE_2x, or DXR2_PLAYRATE_3x, DXR2_PLAYRATE_4x, DXR2_PLAYRATE_5x, DXR2_PLAYRATE_6x
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SLOW_BACKWARDS</B><BR>
+Slow Backwards<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg is one of DXR2_PLAYRATE_2x, or DXR2_PLAYRATE_3x, DXR2_PLAYRATE_4x, DXR2_PLAYRATE_5x, DXR2_PLAYRATE_6x
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_FAST_FORWARDS</B><BR>
+Fast Forwards<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg is one of DXR2_PLAYRATE_2x, or DXR2_PLAYRATE_3x, DXR2_PLAYRATE_4x, DXR2_PLAYRATE_5x, DXR2_PLAYRATE_6x
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_FAST_BACKWARDS</B><BR>
+Fast Backwards<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg is one of DXR2_PLAYRATE_2x, or DXR2_PLAYRATE_3x, DXR2_PLAYRATE_4x, DXR2_PLAYRATE_5x, DXR2_PLAYRATE_6x
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_SOURCE_ASPECT_RATIO</B><BR>
+Set source aspect ratio<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t. 
+<UL>
+<LI>arg is one of DXR2_ASPECTRATIO_4_3, or DXR2_ASPECTRATIO_16_9
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_ASPECT_RATIO_MODE</B><BR>
+Set aspect ratio mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t
+<UL>
+<LI>arg is one of DXR2_ASPECTRATIOMODE_NORMAL, DXR2_ASPECTRATIOMODE_PAN_SCAN, DXR2_ASPECTRATIOMODE_LETTERBOX
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SINGLE_STEP</B><BR>
+Single step the picture<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_REVERSE_PLAY</B><BR>
+Reverse play<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_SUBPICTURE_PALETTES</B><BR>
+Set the subpicture palette<BR>
+<EM>Arguments:</EM> instance of dxr2_palette_t<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_GET_CHALLENGE_KEY</B><BR>
+Get the challenge key from the DXR2<BR>
+<EM>Arguments:</EM> instance of dxr2_challengeKey_t<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SEND_CHALLENGE_KEY</B><BR>
+Send the challenge key to the DXR2<BR>
+<EM>Arguments:</EM> instance of dxr2_challengeKey_t<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_GET_RESPONSE_KEY</B><BR>
+Get the response key from the DXR2<BR>
+<EM>Arguments:</EM> instance of dxr2_responseKey_t<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SEND_RESPONSE_KEY</B><BR>
+Send the response key to the DXR2<BR>
+<EM>Arguments:</EM> instance of dxr2_responseKey_t<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SEND_DISC_KEY</B><BR>
+Send the disc key to the DXR2<BR>
+<EM>Arguments:</EM> instance of dxr2_discKey_t<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SEND_TITLE_KEY</B><BR>
+Send the title key to the DXR2<BR>
+<EM>Arguments:</EM> instance of dxr2_titleKey_t<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_DECRYPTION_MODE</B><BR>
+Set decryption mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t<BR>
+<UL>
+<LI>arg is one of DXR2_CSSDECRMODE_OFF, DXR2_CSSDECRMODE_ON
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_INIT_ZIVADS</B><BR>
+Load ucode into the Ziva & initialise it<BR>
+<EM>Arguments:</EM> instance of dxr2_uCode_t <BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_TV_MACROVISION_MODE</B><BR>
+Set bt865 Macrovision mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t<BR>
+<UL>
+<LI>arg = one of DXR2_MACROVISION_*
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_RESET</B><BR>
+Reset DXR2<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_BITSTREAM_TYPE</B><BR>
+Set bitstream type<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t
+<UL>
+<LI>arg is one of DXR2_BITSTREAM_TYPE_MPEG_VOB, DXR2_BITSTREAM_TYPE_CDROM_VCD, DXR2_BITSTREAM_TYPE_MPEG_VCD, DXR2_BITSTREAM_TYPE_CDDA, DXR2_BITSTREAM_TYPE_4
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_PLAY</B><BR>
+Play<BR>
+<EM>Arguments:</EM> None<BR>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_GET_STC</B><BR>
+Get System Time Clock<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t
+<UL>
+<LI>arg will be set to result
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_AUDIO_SAMPLE_FREQENCY</B><BR>
+Set audio sample frequency<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg: DXR2_AUDIO_FREQ_441, DXR2_AUDIO_FREQ_96, DXR2_AUDIO_FREQ_24, DXR2_AUDIO_FREQ_2205, DXR2_AUDIO_FREQ_32
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_AUDIO_DATA_WIDTH</B><BR>
+Set audio data width<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= DXR2_AUDIO_WIDTH_16, DXR2_AUDIO_WIDTH_24, DXR2_AUDIO_WIDTH_32
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_IEC958_OUTPUT_MODE</B><BR>
+Sets the IEC-958 output mode (either decoded AC3, or encoded AC3)<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= DXR2_IEC958_DECODED, DXR2_IEC958_ENCODED
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_AC3_MODE</B><BR>
+Set the AC3 mode... probably for Karaoke... Mmmmm... how useful ;)<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= DXR2_AC3MODE_LR_STEREO, DXR2_AC3MODE_LR_STEREO_PROLOGIC, DXR2_AC3MODE_LR_MONOR
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SELECT_AC3_VOICE</B><BR>
+Selects AC3 voice, either to NONE, or V1V2. This is for karaoke<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= DXR2_AC3VOICE_NONE, DXR2_AC3VOICE_V1V2
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_AUDIO_MUTE</B><BR>
+Mute/unmute audio<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= DXR2_AUDIO_MUTE_ON, DXR2_AUDIO_MUTE_OFF
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_STEREO_MODE</B><BR>
+Set stereo mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg=DXR2_AUDIO_STEREO_NORMAL, DXR2_AUDIO_STEREO_MONOL, DXR2_AUDIO_STEREO_MONOR, DXR2_AUDIO_STEREO_REVERSE
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SELECT_STREAM</B><BR>
+FIXME... what to do with MPEG1 audio streams...Select stream<BR>
+<EM>Arguments:</EM> instance of dxr2_twoArg_t.
+<UL>
+<LI>arg1 = stream type: DXR2_STREAM_VIDEO, DXR2_STREAM_SUBPICTURE, DXR2_STREAM_AUDIO_AC3, DXR2_STREAM_AUDIO_MPEG, DXR2_STREAM_AUDIO_LPCM, DXR2_STREAM_AUDIO_5
+<LI>arg2 = stream to select
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_HIGHLIGHT</B><BR>
+FIXME.. don't know what all of these doHighlight a button <BR>
+<EM>Arguments:</EM> instance of dxr2_twoArg_t.
+<UL>
+<LI>arg1 = button to highlight (1-36), or DXR2_BUTTON_NONE, DXR2_BUTTON_UP, DXR2_BUTTON_DOWN, DXR2_BUTTON_LEFT, DXR2_BUTTON_RIGHT
+<LI>arg2 = action to perform on button: DXR2_BUTTONACTION_SELECT, DXR2_BUTTONACTION_UNHIGHLIGHT,DXR2_BUTTONACTION_ACTIVATE, DXR2_BUTTONACTION_ACTIVATE_SELECTED, DXR2_BUTTONACTION_ (4-8)
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_COLOUR</B><BR>
+Set the overlay colour<BR>
+<EM>Arguments:</EM> instance of dxr2_sixArg_t.
+<UL>
+<LI>arg1= Lower bound for red
+<LI>arg2= Upper bound for red
+<LI>arg3= Lower bound for green
+<LI>arg4= Upper bound for green
+<LI>arg5= Lower bound for blue
+<LI>arg6= Upper bound for blue 
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_GAIN</B><BR>
+Set the colour gain<BR>
+<EM>Arguments:</EM> instance of dxr2_fourArg_t.
+<UL>
+<LI>arg1= Common gain (0 - 0x3f)
+<LI>arg2= red gain (0- 63)
+<LI>arg3= green gain (0- 63)
+<LI>arg4= blue gain (0- 63)
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_IN_DELAY</B><BR>
+Sets the "in delay" value<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= In delay value (0-3)
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_MODE</B><BR>
+Set overlay mode<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.<BR>
+<UL>
+<LI>arg= One of DXR2_OVERLAY_*
+</UL>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_CROPPING</B><BR>
+Sets the cropping values<BR>
+<EM>Arguments:</EM> instance of dxr2_fourArg_t.
+<UL>
+<LI>arg1= Left cropping in pixels
+<LI>arg2= Right cropping in pixels
+<LI>arg3= Top cropping in pixels
+<LI>arg4= Bottom cropping in pixels
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_DIMENSION</B><BR>
+Sets the dimension of the overlay window<BR>
+<EM>Arguments:</EM> instance of dxr2_twoArg_t.
+<UL>
+<LI>arg1= Width in pixels
+<LI>arg2= Height in pixels
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_POSITION</B><BR>
+Sets the overlay position<BR>
+<EM>Arguments:</EM> instance of dxr2_twoArg_t.
+<UL>
+<LI>arg1= xpos in pixels
+<LI>arg2= ypos in pixels
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_RATIO</B><BR>
+Set the x ratio, for fine tuning display ratios<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= X-Ratio adjust (1-2500)
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_CALCULATE_VGA_PARAMETERS</B><BR>
+Calculates necessary VGA parameters<BR>
+<EM>Arguments:</EM> instance of dxr2_vgaParams_t
+<UL>
+<LI>The screenWidth parameter should be initalised to the width of the screen in pixels. The other parameters will be updated by this call.
+</UL>
+<EM>Returns:</EM> 0 on success, or error if <0<BR>
+<BR>
+
+<B>DXR2_IOC_SET_VGA_PARAMETERS</B><BR>
+Sets VGA parameters to supplied values<BR>
+<EM>Arguments:</EM> instance of dxr2_vgaParams_t
+<UL>
+<LI>arg= Instance of structure as derived from <B>DXR2_IOC_CALCULATE_VGA_PARAMETERS</B>
+</UL>
+<EM>Returns:</EM> timer 0 on succes, or <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_SET_OVERLAY_PICTURE_CONTROLS</B><BR>
+Sets the overlay picture controls<BR>
+<EM>Arguments:</EM> instance of dxr2_fourArg_t.
+<UL>
+<LI>arg1= Gamma control value (0 to 96)
+<LI>arg2= Contrast control value (-128 to 127)
+<LI>arg3= Brightness control value (-128 to 127)
+<LI>arg4= Saturation control value (-128 to 127)
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+<B>DXR2_IOC_BUFFERS_EMPTY</B><BR>
+Checks if the dxr2's video and audio buffers are empty yet<BR>
+<EM>Arguments:</EM> instance of dxr2_oneArg_t.
+<UL>
+<LI>arg= Set to 1 if buffers are empty, 0 if not
+</UL>
+<EM>Returns:</EM> 0 on success, <0 on failure<BR>
+<BR>
+
+
+</BODY>
+</HTML>

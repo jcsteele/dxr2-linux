@@ -1,0 +1,4 @@
+* Fix Scan functionality
+
+* Add finalised IOCTL interface (will be compatable with linuxtv.org's Linux 
+  DVD interface)

@@ -1,0 +1,267 @@
+Linux Dxr2 driver
+Copyright 1999 - 2002 Creative Labs, Inc.
+Released under the Gnu Public License v2.
+
+
+Introduction
+------------
+
+Welcome to the dxr2 driver for linux. This is currently still a development
+driver, although it is now pretty stable. 
+
+This driver ONLY supports Creative's dxr2 card. It does not support any of
+Creative's other DVD products (e.g. it does not support the dxr3, or the DVD
+inlay card).
+
+The Code is not really being actively developed at the moment, but bug fixes,
+etc. are being handled by numerous individuals on the dxr2 mailing list and the 
+Dxr2 resource center (see below).
+
+Note that VGA Overlay is supported, but has some problems. Output to a TV is
+currently the easiest way to achieve DVD playback.  If your kernel supports
+the VESA framebuffer, then you can try Overlay by pressing 'u' while playing
+a DVD with dvdplay-curses (or dvd).
+
+
+Help!
+-----
+
+The first place to look for help would be the Dxr2 Resource Center on 
+Sourceforge.net at http://dxr2.sourceforge.net or 
+http://www.sourceforge.net/projects/dxr2/
+
+The FAQ for the dxr2 driver under linux is maintained by Ben Von Handorf 
+(handorf@penguinpowered.com), and is available from 
+http://home.fuse.net/DaigoFukuru/dxr2-faq.html 
+*NOTE The FAQ is outdated*
+
+The next source for help is the dxr2 mailing list, details of which are 
+available at http://opensource.creative.com/mailman/listinfo/dxr2-devel
+
+You may also find the generic dxr2 FAQ 
+(http://members.tripod.com/wmania/creafaq.htm) of some use, although it is not
+specifically about the linux driver.
+
+Information and firmware upgrades for region locked drives may be found at 
+http://www.visualdomain.net/
+
+If you are looking for programming help on how to use the IOCTL interface,
+look in dxr2/ioctls.c. Each of the ioctls is implemented in a seperate function
+here, and full documentation on the parameters and buffer contents for calling 
+each ioctl is given at the start of each function.
+
+
+
+Required Files
+--------------
+
+* You'll need a recent linux kernel 
+    (the driver has been tested with most kernels, but getting a 2.4.x 
+	series kernel is highly recommended. To find out what kernel you have
+	now issue a "uname -a" without the quotes)
+
+* DVD12.UX firmware file
+    (available from http://dxr2.sourceforge.net/downloads.html)
+
+* A patched version of libdvdread (available at the Dxr2 Resource Center
+    mentioned above -- http://dxr2.sourceforge.net/downloads.html).
+
+**NOTE: The following two items are not required with the newer 2.4.x kernels,
+	or with any of the newer 2.2.x kernels (2.2.16 and above)
+
+* You'll need the CSS IOCTL patches
+    (available from http://www.kernel.dk)
+
+* You'll need the UDF filing system patches, 
+    (available form http://www.csc.calpoly.edu/~bfennema/udf.html)
+
+
+
+Compilation/Setup
+-----------------
+
+**TIP: The easiest way to setup the driver and players is with the 
+        dxr2-install program, which can be found at 
+        http://www.sourceforge.net/projects/dxr2 but if you want to do 
+	everything manually, or if dxr2-install does not work,
+	follow the instructions below.
+
+
+**NOTE: You will need to have the kernel source installed on your system to be able
+	to recompile/patch your kernel.
+
+1) Make sure you've recompiled your kernel with all patches mentioned above if neccesary.
+2) Decompress the tgz file/use CVS to get the latest source into a directory.
+3) Make the dxr2 device ("mknod /dev/dxr2 c 120 0" without the quotes)
+4) Add the following line to your /etc/modules.conf file:
+	alias char-major-120 dxr2
+5) Go into the source directory and type "make".
+6) Use "make insert" to insert all the necessary modules, and "make remove" 
+   to remove them all again.
+7) Rename the DVD12.UX file  to dvd1.ux
+8) Put the dvd1.ux firmware file into /usr/src/
+9) Copy the file dxr2player.conf from the players/ directory into the /etc directory.
+
+
+Basic playing DVDs
+------------------
+
+The "DVD player" is in the "player" directory. Due to the DVD standards being 
+foolishly secret, this is not a full featured DVD player: you will not get
+any of the fancy interactive features, but you will be able to play the movies 
+back.
+
+The following should all be done as root
+
+1) Before using the player for the first time, you should edit the 
+   /etc/dxr2player.conf file and modify it for your particular configuration.
+
+**TIP: You can use dxr2config, which comes with the dxr2-install program to modify
+       your dxr2player.conf file.
+
+2) The easiest way to play a DVD is to use the dvd program.  Just execute dvd
+   or /path/to/dvd (can be done as non-root user).  This will automatically
+   mount the DVD, determine which title contains the movie, and start playing
+   the movie with the dvdplay-curses program.  If the movie isn't in title 1,
+   you could try     dvd num     where num is the desired title (or
+   dvd `dvd-sum`     if IFO parsing fails and you want to play from the largest
+   collection of VOB files).  An (older) alternative would be dvdplay-wrapper.
+   If this is fine for you, skip to #7).  If either of these do not work, or
+   if you want more control, follow the steps below.
+
+3) Mount the DVD using the UDF filesystem.
+
+4) The video files are held on the DVD, in the "VIDEO_TS" directory. The interesting
+   ones are VTS_XX_Y.VOB. A film is usually broken up into several large files, each
+   with the same number for XX in the filename.
+
+5) The files are separated into different 'titles' the XX in the file name (see #4) is
+   the title number.  to play it:  dvdplay -cT<#>  where <#> is the title number.
+   eg:  dvdplay -cT1         to play the first title.  See below for more options and
+   their meanings.
+
+  **NOTE:  This isn't entirely true anymore.  With the IFO parsing through libdvdread,
+	the movie should always be title 1 (and the actual VOB file set is not directly
+	related to the title number).
+ 
+6) Some movies don't work with the -T<#> option(don't have accessible IFO files).  To pley
+   them, try:  dvdplay -c <filename>   where <filename> is the full path to the _first_
+   file in the title you wish to play.
+
+7) When the movie finishes, or you quit dvdplay-curses, you can unmount the DVD, unload
+   the modules, and eject the disk all with the undvd command (or /path/to/undvd if it
+   is not in your path).
+
+
+Player Command line switches
+----------------------------
+
+  -c		Turns CSS decryption ON. 
+		You will need to be running the player as root to use this.
+                This will be deprecated shortly.
+
+  -a X		Select audio Stream. 
+		X should be between 0 and 7 inclusively (by default audio 
+		stream 0 is played)
+
+  -r X		Select Picture ratio. 
+		0 = Letterbox, 1 = normal, 2 = Pan/Scan. 
+
+  -t X		Select TV output format.
+		0 = NTSC, 1= NTSC 60Hz, 2=PAL-M, 3=PAL-M 60Hz, 4=PAL BDGHI, 
+		5 = PAL-N, 6 = PAL-Nc. (0 = US NTSC, 4 = w-european PAL)
+ 
+  -q X		Select audio frequency.
+		0 = 44.1 kHz, 2 = 48 kHz, 3 = 96 kHz, 4 = 22.05 kHz, 5 = 32 kHz.
+		(You should choose 3 (96 kHz) for most DVD AC-3 movies.)
+
+  -w X		Select audio width.
+		0 = 16 bits, 1 = 20bits, 2 = 24 bits.
+		I'm not sure why this is here.
+
+  -s X		Select bitstream type.
+		0 = DVD. 1 = CDROM VCD, 2 = MPEG VCD, 3 = CDDA, 4 = Unknown
+		(Choose 0 (DVD) for playing .VOB files, and 2 (MPEG VCD) for 
+		playing VCD .mpg/.dat files)
+
+  -u X          Select audio format type.
+                0 = AC3, 1 = MPEG, 2 = PCM
+                Usually -s will also choose the right audio type, but some DVDs
+                have PCM.  If you use this option with -s, put -s first.
+
+  -T X		Enable multi-angle compensation. Some DVDs have "multiple 
+		angles" encoded in them. When you play these without the -T
+		switch you often get little pieces of scenes repeating each
+		other in quick succession. Using this switch should solve this
+                X is the number of the title you wish to play.
+
+The full set of command line switches is displayed when you run the player without any arguments.
+
+
+
+dxr2player.conf Configuration
+-----------------------------
+
+drive: /dev/cdrom
+		DVD device
+		You should set the above to be whatever DVD device you use. This is used
+		for CSS authentication.
+
+dxr2:  /dev/dxr2
+		DXR2 device
+		The dxr2 device to use.
+
+firmware: /usr/src/dvd1.ux
+                The place where you keep your firmware file.
+
+mountpoint: /dvd
+                The directory where you mount your DVD drive.
+
+audio_format: AC3
+		Audio Format
+	        You can set this to AC3 or MPEG
+
+audio_freq: 48
+		Audio Frequency
+	        You can set this to 44.1 / 48 / 96 / 2205 / 32
+
+audio_width: 16
+		Audio Bitstream Width
+		You can set this to 16 / 20 / 24
+
+tv_format: NTSC
+		Output TV format
+		You can set this to NTSC, NTSC_60, PAL_M, PAL_M_60, PAL_BDGHI, PAL_N, PAL_Nc
+
+video_format: letterbox
+		Video format
+		You can set this to letterbox / normal / pan_scan
+
+subpicture: OFF
+		Subpicture ON/OFF
+		You can set this to ON / OFF
+
+The following options only pertain to the VGA overlay:
+
+overlay: OFF
+                The default Overlay mode.  ON or OFF
+
+overlay_geom: <width>x<height>+<x>+<y>
+                The gemoetry parameters for the default overlay window.
+                X/Y specify the top-left corner of the display.
+
+overlay_crop: <left>x<right>x<top>x<bottom>
+                The number of pixels to chop off of each side of the image.
+
+red: <min>-<max>
+green: <min>-<max>
+blue: <min>-<max>
+                The min-max red values for overlay.  the color on your display must be within
+                these values for the video to show up.  The nubmers are in hex.
+
+
+
+Notes
+-----
+
+  Since this is a development driver, certain things WILL be changing.

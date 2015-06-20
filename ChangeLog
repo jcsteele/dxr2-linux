@@ -1,0 +1,141 @@
+2002-03-15 Scott Bucholtz <linuxman@linuxmanland.com>
+	* Added Tobias Diedrich's <ranma@gmx.at> new subtitles patch
+	  which is much easier than the old ones because of the utilization
+	  of libdvdread.
+
+
+2002-03-06 Gerald Henrikse <ghenriks@rogers.com>
+	* Changed things so that the compiler now determines whether to use
+	  module versioning instead of having the makefile apply it by default.
+	* Added sysinclude/dxr2modver.h to cover this and only included into 
+	  the source files that required it to make an insertable module.
+	  
+	 
+2002-03-05 Scott Bucholtz <linuxman@linuxmanland.com>
+	* Applied Leonid Froenchenko's <lfroen@galileo.co.il> patch which
+	  fixes a race condition in the overlay procedure.
+
+
+2002-03-01 Scott Bucholtz <linuxman@linuxmanland.com>
+	* Made minor modification to dvd C wrapper so that you can (optionally)
+	  give it the title number that is desired to be played as an argument.
+	* Fixed compilation warning message about __DVD_DEBUG being re-defined
+	  so that now (at least on my system) the entire driver compiles and
+	  installs without warning messages.
+	* Removed file in source_patchs/ directory to speed up download time
+	  (and remove useless files).
+	* Cleaned up this file so it looks perty.  :)
+
+		
+2002-02-18 Scott Bucholtz <linuxman@linuxmanland.com>
+	* Applied James Hawtin's <oolon@ankh.org> IFO parser patch.  This
+	  requires a patched version of libdvdread available at
+	  http://dxr2.sourceforge.net/
+	* Patched dvd wrapper so that it utilizes the new IFO parser.
+	* I hope I didn't break anything.  The patch was made against an older
+	  CVS so I tryed to put everything in sync (please don't break...).
+
+	  
+2002-02-05 Scott Bucholtz <linuxman@linuxmanland.com>
+	* Changed makefile so that modules are installed with permissions 644
+	  instead of 755 (for kernel compliance).
+	* Added dvd, undvd, and dvd-sum to the players directory (and thus
+	  modified both the players/makefile and makefile to build/install
+	  them).  These seem to be fairly stable wrappers (and they dynamically
+	  figure stuff out (like mountpoints, etc.)).
+
+	  
+2002-01-08 Raphael Zulliger <zulli@gmx.net>
+           * Changed makefile. commands like modprobe and depmod changed into
+	     /sbin/modprobe, /sbin/depmod
+
+	     
+2001-12-19 Josh Steele <jsteele@codefusion.org>
+[1.0.3]	   * applied the newer patch submitted by Scott Bucholtz
+	     *HACK's are BAD patch ;)* fixing the module license 
+	     problem, the newer patch fixes problem with both new 
+	     and old kernels
+	   * Got rid of all linux/malloc.h includes in source, and 
+	     replaced them with linux/slab.h
+
+
+2001-12-18 Raphael Zulliger <zulli@gmx.net>
+            * Added some #ifdef to the changes from Bucholtz. so it should 
+	      work on old and newer kernels...
+
+
+2001-12-18 Josh Steele <jsteele@codefusion.org>
+	    * updated documentation
+	    * added module license patch submitted by Scott Bucholtz 
+	      <linuxman@linuxmanland.com>
+
+
+2001-09-03 Raphael Zulliger <zulli@gmx.net>
+	    * readded SMP support (has to be tested by someone)
+	    * 'make install' now installes the dxr2-headers into
+	      /usr/src/linux/include/linux/dxr2 (is that ok?)
+	    * installing the modules should work now - even if the
+	      /lib/modules/2.x.x-xxx/kernel/drivers/video - directory doesn't
+	      exist
+	    * it compiles dvdplay*-programms again and installes them into
+	      /usr/local/bin
+
+
+2001-xx-xx Raphael Zulliger <zulli@gmx.net>
+	    * changed the (almost) whole makefile to fix problems with newer
+	      kernel's (2.4.x)
+
+
+1999-11-09  Andrew de Quincey <adq@tardis.ed.ac.uk>
+	    * Added new player source tree, and last update to test by Evan
+	      Van Dyke
+
+
+1999-11-08  Andrew de Quincey <adq@tardis.ed.ac.uk>
+	    * Fixed type determination code again :) (added type ZIVADS_TYPE_2)
+ 	    * Fixed tc6807af CSS code (couple of minor bugs found)
+	    * Fixed player CSS code: sets DXR2_CSSDECRMODE_ON after CSS auth,
+	      and also works out the "mysterious" extra title key byte for
+	      tc6807af (turned out it contained the CGMS flags).
+	    * Added bitstream type selection options to player. (VCDs now
+	      playable)
+	    * Couple of miscellaneous fixes to player.
+
+
+1999-11-07  Andrew de Quincey <adq@tardis.ed.ac.uk>
+	    * Added new player by Evan Van Dyke
+	    * Fixed zivaDS type determination code.
+
+
+1999-11-06  Andrew de Quincey <adq@tardis.ed.ac.uk>
+	    * Added Evan Van Dyke's combo-patch to the code for 
+	      multithreaded player, and a few other things
+	    * Added Mordechai T. Abzug's makefiles patches.
+	    * Added <mtaht@picketwyre.com>'s makefile patches for module 
+	      versions
+
+
+1999-11-04  Andrew de Quincey <adq@tardis.ed.ac.uk>
+	    * Fixed up the card's CSS stuff so that it now works properly,
+	      and added CSS authentication to the player. The player now
+	      REQUIRES the DVD CSS ioctls patch from http://www.kernel.dk/
+	      to compile
+
+
+1999-11-01  Andrew de Quincey <adq@tardis.ed.ac.uk>
+(v0.9.2b)   Lucien Murray-Pitts <lucien@martincurrie.com>
+	    * Testing revealed race problem with IRQ handler on slower
+	      machines... rewrote it to avoid this.
+
+
+1999-10-31  Andrew de Quincey <adq@tardis.ed.ac.uk>
+(v0.9.1b)   * Fixed video transmission/IRQ handling code.
+
+
+1999-10-20  Andrew de Quincey <adq@tardis.ed.ac.uk>
+(v0.9b)	    Lucien Murray-Pitts <lucien@martincurrie.com>
+	    * Rewrote and extended original incomplete driver.
+
+
+1999-04-17  Andrew T. Veliath  <andrewtv@usa.net>
+(v0.1.0)    * New driver structure in place.

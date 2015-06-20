@@ -1,0 +1,60 @@
+#!/usr/bin/perl -wT
+
+# play-dvd: a wrapper for dvdplay-curses
+# by Morty Abzug: 1999-12-16
+# this is designed to be SUID, or else run by root
+
+use strict;
+use POSIX;
+use English;
+
+# configurables up here
+my $device="/dev/dvd";
+my $mountpoint="/dvd";
+my $vobdir="$mountpoint/VIDEO_TS";
+my $command="dvdplay-curses -cT";
+my $pause=1; # if you get an authentication error, try increasing this.
+$ENV{PATH}="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin";
+
+# code
+die "The program takes no arguments.\n" if @ARGV;
+
+die "$0: this must be run as root or be SUID \n".
+     "(SUID only helps if perl is built with suid-emulation)\n" if $EUID;
+
+# also set real UID to 0, or mount won't work
+setuid(0) && die "$0: setuid 0: $!";
+
+system("umount $device >/dev/null 2>&1");
+system("umount $mountpoint >/dev/null 2>&1");
+
+system("driveauth");
+system("mount -r -t udf $device $mountpoint");
+die "unable to 'mount -t udf $device $mountpoint'\n" if $?>>8;
+
+system("modprobe dxr2");
+die "unable to modprobe dxr2\n" if $?>>8;
+
+opendir(DIR, $vobdir) || die "$0: opendir $vobdir: $!";
+my @vob_check=grep( m{VTS_(\d+)_[1-9].VOB$}, readdir(DIR));
+closedir(DIR);
+
+my @vobgroup;
+foreach(@vob_check) {
+        $vobgroup[$1]++ if m{VTS_(\d+)_\d+.VOB$};
+}
+
+my ($vobmax, $vobid, $i)=(0, 0, 0);
+for ($i=1; $i<@vobgroup; $i++) {
+        ($vobmax, $vobid) = ($vobgroup[$i], $i) if $vobgroup[$i] > $vobmax;
+}
+
+my $first_vob=sprintf("$vobdir/VTS_%02d_1.VOB", $vobid);
+die "Weird, can't find VOB $first_vob\n" unless -e $first_vob;
+
+# for some reason, i sometimes get authentication errors unless i wait here.
+sleep $pause;
+
+system("$command $first_vob");
+
+system("umount $mountpoint");
